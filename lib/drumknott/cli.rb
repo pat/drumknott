@@ -1,4 +1,6 @@
 class Drumknott::CLI
+  EMPTY_CACHE = {}.freeze
+
   def self.call(command, arguments = [], name = nil, key = nil)
     new(command, arguments, name, key).call
   end
@@ -38,11 +40,17 @@ Credentials for Drumknott are expected via environment variables, or via a
 
   attr_reader :command, :arguments
 
+  def cache
+    return EMPTY_CACHE unless File.exists? '.drumknott'
+
+    @cache ||= JSON.parse File.read('.drumknott')
+  end
+
   def name
-    @name || ENV['DRUMKNOTT_NAME']
+    @name || cache['name'] || ENV['DRUMKNOTT_NAME']
   end
 
   def key
-    @key || ENV['DRUMKNOTT_KEY']
+    @key || cache['key'] || ENV['DRUMKNOTT_KEY']
   end
 end

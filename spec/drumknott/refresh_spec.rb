@@ -19,38 +19,49 @@ RSpec.describe Drumknott::Refresh do
     ).to_return :status => 200
   end
 
-  describe '#refresh' do
-    it 'processes the site to load all data' do
-      expect(site).to receive(:process)
+  it 'processes the site to load all data' do
+    expect(site).to receive(:process)
 
-      Drumknott::CLI.call 'refresh', [], 'my-site', 'my-key'
-    end
+    Drumknott::CLI.call 'refresh', [], 'my-site', 'my-key'
+  end
 
-    it 'clears out the existing data' do
-      Drumknott::CLI.call 'refresh', [], 'my-site', 'my-key'
+  it 'clears out the existing data' do
+    Drumknott::CLI.call 'refresh', [], 'my-site', 'my-key'
 
-      expect(
-        a_request(
-          :post, "http://drumknottsearch.com/api/v1/my-site/pages/clear"
-        ).with(:headers => {'AUTHENTICATION' => 'my-key'})
-      ).to have_been_made
-    end
+    expect(
+      a_request(
+        :post, "http://drumknottsearch.com/api/v1/my-site/pages/clear"
+      ).with(:headers => {'AUTHENTICATION' => 'my-key'})
+    ).to have_been_made
+  end
 
-    it 'updates each post' do
-      Drumknott::CLI.call 'refresh', [], 'my-site', 'my-key'
+  it 'updates each post' do
+    Drumknott::CLI.call 'refresh', [], 'my-site', 'my-key'
 
-      expect(
-        a_request(
-          :put, "http://drumknottsearch.com/api/v1/my-site/pages"
-        ).with(
-          :body => {"page" => {
-            "name"    => "A post",
-            "path"    => "/",
-            "content" => "post content"
-          }}.to_json,
-          :headers => {'AUTHENTICATION' => 'my-key'}
-        )
-      ).to have_been_made.twice
-    end
+    expect(
+      a_request(
+        :put, "http://drumknottsearch.com/api/v1/my-site/pages"
+      ).with(
+        :body => {"page" => {
+          "name"    => "A post",
+          "path"    => "/",
+          "content" => "post content"
+        }}.to_json,
+        :headers => {'AUTHENTICATION' => 'my-key'}
+      )
+    ).to have_been_made.twice
+  end
+
+  it 'uses cached credentials' do
+    Drumknott::CLI.call 'keys', ['my-site', 'my-key']
+    Drumknott::CLI.call 'refresh'
+
+    expect(
+      a_request(
+        :post, "http://drumknottsearch.com/api/v1/my-site/pages/clear"
+      ).with(:headers => {'AUTHENTICATION' => 'my-key'})
+    ).to have_been_made
+
+    File.delete('.drumknott')
   end
 end
