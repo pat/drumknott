@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-RSpec.describe Drumknott do
-  let(:site)      { double 'Site', :process => true, :posts => [post, post] }
-  let(:post)      { double 'Post', :title => 'A post', :url => '/',
+RSpec.describe Drumknott::Refresh do
+  let(:site) { double 'Site', :process => true, :posts => [post, post] }
+  let(:post) { double 'Post', :title => 'A post', :url => '/',
     :output => 'post content' }
 
   before :each do
@@ -23,11 +23,11 @@ RSpec.describe Drumknott do
     it 'processes the site to load all data' do
       expect(site).to receive(:process)
 
-      Drumknott::CLI.call 'refresh', 'my-site', 'my-key'
+      Drumknott::CLI.call 'refresh', [], 'my-site', 'my-key'
     end
 
     it 'clears out the existing data' do
-      Drumknott::CLI.call 'refresh', 'my-site', 'my-key'
+      Drumknott::CLI.call 'refresh', [], 'my-site', 'my-key'
 
       expect(
         a_request(
@@ -37,7 +37,7 @@ RSpec.describe Drumknott do
     end
 
     it 'updates each post' do
-      Drumknott::CLI.call 'refresh', 'my-site', 'my-key'
+      Drumknott::CLI.call 'refresh', [], 'my-site', 'my-key'
 
       expect(
         a_request(
