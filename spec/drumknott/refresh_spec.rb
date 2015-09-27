@@ -11,11 +11,11 @@ RSpec.describe Drumknott::Refresh do
     stub_const 'Jekyll::Site', double(:new => site)
 
     stub_request(
-      :post, "http://drumknottsearch.com/api/v1/my-site/pages/clear"
+      :post, "https://drumknottsearch.com/api/v1/my-site/pages/clear"
     ).to_return :status => 200
 
     stub_request(
-      :put, "http://drumknottsearch.com/api/v1/my-site/pages"
+      :put, "https://drumknottsearch.com/api/v1/my-site/pages"
     ).to_return :status => 200
   end
 
@@ -30,7 +30,7 @@ RSpec.describe Drumknott::Refresh do
 
     expect(
       a_request(
-        :post, "http://drumknottsearch.com/api/v1/my-site/pages/clear"
+        :post, "https://drumknottsearch.com/api/v1/my-site/pages/clear"
       ).with(:headers => {'AUTHENTICATION' => 'my-key'})
     ).to have_been_made
   end
@@ -40,7 +40,7 @@ RSpec.describe Drumknott::Refresh do
 
     expect(
       a_request(
-        :put, "http://drumknottsearch.com/api/v1/my-site/pages"
+        :put, "https://drumknottsearch.com/api/v1/my-site/pages"
       ).with(
         :body => {"page" => {
           "name"    => "A post",
@@ -58,7 +58,7 @@ RSpec.describe Drumknott::Refresh do
 
     expect(
       a_request(
-        :post, "http://drumknottsearch.com/api/v1/my-site/pages/clear"
+        :post, "https://drumknottsearch.com/api/v1/my-site/pages/clear"
       ).with(:headers => {'AUTHENTICATION' => 'my-key'})
     ).to have_been_made
 

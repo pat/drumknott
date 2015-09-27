@@ -1,5 +1,5 @@
 class Drumknott::Refresh
-  URL = 'http://drumknottsearch.com'
+  URL = 'https://drumknottsearch.com'
 
   def self.call(name, key)
     new(name, key).call
