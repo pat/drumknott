@@ -3,5 +3,4 @@
 
 require 'drumknott'
 
-drumknott = Drumknott.new ENV['SITE_NAME'], ENV['SITE_KEY']
-drumknott.refresh
+Drumknott::CLI.call ARGV[0]
