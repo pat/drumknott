@@ -1,6 +1,6 @@
-# Drumknott
+# Drumknott CLI
 
-Takes each of your compiled Jekyll pages and uploads them to the Drumknott search service.
+Command line tool for the Drumknott search service. When invoked, it takes each of your compiled Jekyll pages and uploads them to Drumknott.
 
 ## Installation
 
@@ -8,9 +8,12 @@ Takes each of your compiled Jekyll pages and uploads them to the Drumknott searc
 
 ## Usage
 
-From within the app directory
+From within the local Jekyll site directory, using the credentials provided by Drumknott:
 
-    $ drumknott
+    $ drumknott keys SITE_NAME SITE_KEY
+    $ drumknott refresh
+
+The `keys` command will save your credentials to a `.drumknott` file in your site's directory. Do not commit this file to git! If you don't want to have that file saved, you can alternatively use the environment variables `DRUMKNOTT_NAME` and `DRUMKNOTT_KEY` respectively.
 
 ## Development
 
