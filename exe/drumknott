@@ -1,0 +1,7 @@
+#!/usr/bin/env ruby
+# -*- mode: ruby -*-
+
+require 'drumknott'
+
+drumknott = Drumknott.new ENV['SITE_NAME'], ENV['SITE_KEY']
+drumknott.refresh
