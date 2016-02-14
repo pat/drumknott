@@ -1,12 +1,12 @@
 class Drumknott::Refresh
   URL = 'https://drumknottsearch.com'
 
-  def self.call(name, key)
-    new(name, key).call
+  def self.call(name, key, include_pages = true)
+    new(name, key, include_pages).call
   end
 
-  def initialize(name, key)
-    @name, @key = name, key
+  def initialize(name, key, include_pages)
+    @name, @key, @include_pages = name, key, include_pages
   end
 
   def call
@@ -34,13 +34,17 @@ class Drumknott::Refresh
     end
   end
 
+  def include_pages?
+    @include_pages
+  end
+
   def site
     @site ||= Jekyll::Site.new Jekyll.configuration
   end
 
   def update
     site.posts.docs.each { |document| update_document document }
-    site.pages.each      { |page|     update_document page }
+    site.pages.each      { |page|     update_document page } if include_pages?
   end
 
   def update_document(document)

@@ -10,10 +10,12 @@ Command line tool for the Drumknott search service. When invoked, it takes each 
 
 From within the local Jekyll site directory, using the credentials provided by Drumknott:
 
-    $ drumknott keys SITE_NAME SITE_KEY
+    $ drumknott keys SITE_NAME SITE_KEY INCLUDE_PAGES
     $ drumknott refresh
 
 The `keys` command will save your credentials to a `.drumknott` file in your site's directory. Do not commit this file to git! If you don't want to have that file saved, you can alternatively use the environment variables `DRUMKNOTT_NAME` and `DRUMKNOTT_KEY` respectively.
+
+By default, both posts and normal pages will be uploaded to Drumknott. If you only wish to include posts, the INCLUDE_PAGES argument in the `keys` command should be `'no'`. This can also be managed via the `DRUMKNOTT_PAGES` environment variable.
 
 ## Development
 
@@ -31,5 +33,5 @@ Firstly, please note the Code of Conduct for all contributions to this project. 
 
 ## Licence
 
-Copyright (c) 2015, Drumknott is developed and maintained by Pat Allan, and is
+Copyright (c) 2016, Drumknott is developed and maintained by Pat Allan, and is
 released under the open MIT Licence.

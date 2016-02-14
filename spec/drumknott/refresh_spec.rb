@@ -73,6 +73,23 @@ RSpec.describe Drumknott::Refresh do
     ).to have_been_made.once
   end
 
+  it 'skips pages if requested' do
+    Drumknott::CLI.call 'refresh', [], 'my-site', 'my-key', false
+
+    expect(
+      a_request(
+        :put, "https://drumknottsearch.com/api/v1/my-site/pages"
+      ).with(
+        :body => {"page" => {
+          "name"    => "A page",
+          "path"    => "/",
+          "content" => "page content"
+        }}.to_json,
+        :headers => {'AUTHENTICATION' => 'my-key'}
+      )
+    ).to_not have_been_made
+  end
+
   it 'uses cached credentials' do
     Drumknott::CLI.call 'keys', ['my-site', 'my-key']
     Drumknott::CLI.call 'refresh'

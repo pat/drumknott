@@ -10,12 +10,13 @@ RSpec.describe Drumknott::Keys do
   end
 
   it 'writes a .drumknott file with the provided keys' do
-    Drumknott::CLI.call 'keys', ['my-site', 'my-key']
+    Drumknott::CLI.call 'keys', ['my-site', 'my-key', 'yes']
 
     expect(File.exists?('.drumknott')).to eq(true)
     expect(File.read('.drumknott')).to eq(JSON.generate(
-      'name' => 'my-site',
-      'key'  => 'my-key'
+      'name'  => 'my-site',
+      'key'   => 'my-key',
+      'pages' => true
     ))
   end
 end

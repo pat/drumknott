@@ -1,18 +1,19 @@
 class Drumknott::CLI
   EMPTY_CACHE = {}.freeze
 
-  def self.call(command, arguments = [], name = nil, key = nil)
-    new(command, arguments, name, key).call
+  def self.call(command, arguments = [], name = nil, key = nil, include_pages = nil)
+    new(command, arguments, name, key, include_pages).call
   end
 
-  def initialize(command, arguments = [], name = nil, key = nil)
-    @command, @arguments, @name, @key = command, arguments, name, key
+  def initialize(command, arguments = [], name = nil, key = nil, include_pages = nil)
+    @command, @arguments, @name, @key, @include_pages =
+      command, arguments, name, key, include_pages
   end
 
   def call
     case command
     when 'refresh'
-      Drumknott::Refresh.call name, key
+      Drumknott::Refresh.call name, key, include_pages?
     when 'keys'
       Drumknott::Keys.call arguments
     else
@@ -52,5 +53,11 @@ Credentials for Drumknott are expected via environment variables, or via a
 
   def key
     @key || cache['key'] || ENV['DRUMKNOTT_KEY']
+  end
+
+  def include_pages?
+    return @include_pages unless @include_pages.nil?
+
+    cache['pages'] || Drumknott::IncludePages.call(ENV['DRUMKNOTT_PAGES'])
   end
 end
