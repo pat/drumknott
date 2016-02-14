@@ -2,6 +2,11 @@ class Drumknott::IncludePages
   TRUE_OPTIONS = ['true', 'yes', 'y'].freeze
 
   def self.call(value)
-    value.nil? || TRUE_OPTIONS.include?(value.downcase)
+    case value
+    when TrueClass, FalseClass
+      value
+    else
+      value.nil? || TRUE_OPTIONS.include?(value.downcase)
+    end
   end
 end

@@ -57,7 +57,8 @@ Credentials for Drumknott are expected via environment variables, or via a
 
   def include_pages?
     return @include_pages unless @include_pages.nil?
+    return cache['pages'] unless cache['pages'].nil?
 
-    cache['pages'] || Drumknott::IncludePages.call(ENV['DRUMKNOTT_PAGES'])
+    Drumknott::IncludePages.call ENV['DRUMKNOTT_PAGES']
   end
 end
