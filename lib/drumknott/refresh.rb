@@ -39,21 +39,24 @@ class Drumknott::Refresh
   end
 
   def update
-    site.posts.docs.each do |document|
-      connection.put do |request|
-        request.url "/api/v1/#{name}/pages"
+    site.posts.docs.each { |document| update_document document }
+    site.pages.each      { |page|     update_document page }
+  end
 
-        request.headers['AUTHENTICATION'] = key
-        request.headers['Content-Type']   = 'application/json'
+  def update_document(document)
+    connection.put do |request|
+      request.url "/api/v1/#{name}/pages"
 
-        request.body = JSON.generate({
-          :page => {
-            :name    => document.data['title'],
-            :path    => document.url,
-            :content => document.output
-          }
-        })
-      end
+      request.headers['AUTHENTICATION'] = key
+      request.headers['Content-Type']   = 'application/json'
+
+      request.body = JSON.generate({
+        :page => {
+          :name    => document.data['title'],
+          :path    => document.url,
+          :content => document.output
+        }
+      })
     end
   end
 end

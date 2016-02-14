@@ -1,10 +1,13 @@
 require 'spec_helper'
 
 RSpec.describe Drumknott::Refresh do
-  let(:site)  { double 'Site', :process => true, :posts => posts }
+  let(:site)  { double 'Site', :process => true, :posts => posts,
+    :pages => [page] }
   let(:posts) { double 'Posts', :docs => [post, post] }
   let(:post)  { double 'Post', :data => {'title' => 'A post'}, :url => '/',
     :output => 'post content' }
+  let(:page)  { double 'Page', :data => {'title' => 'A page'}, :url => '/',
+    :output => 'page content' }
 
   before :each do
     allow(Jekyll).to receive(:configuration).and_return(double)
@@ -51,6 +54,23 @@ RSpec.describe Drumknott::Refresh do
         :headers => {'AUTHENTICATION' => 'my-key'}
       )
     ).to have_been_made.twice
+  end
+
+  it 'updates each page' do
+    Drumknott::CLI.call 'refresh', [], 'my-site', 'my-key'
+
+    expect(
+      a_request(
+        :put, "https://drumknottsearch.com/api/v1/my-site/pages"
+      ).with(
+        :body => {"page" => {
+          "name"    => "A page",
+          "path"    => "/",
+          "content" => "page content"
+        }}.to_json,
+        :headers => {'AUTHENTICATION' => 'my-key'}
+      )
+    ).to have_been_made.once
   end
 
   it 'uses cached credentials' do
