@@ -39,7 +39,7 @@ class Drumknott::Refresh
   end
 
   def update
-    site.posts.each do |page|
+    site.posts.docs.each do |document|
       connection.put do |request|
         request.url "/api/v1/#{name}/pages"
 
@@ -48,9 +48,9 @@ class Drumknott::Refresh
 
         request.body = JSON.generate({
           :page => {
-            :name    => page.title,
-            :path    => page.url,
-            :content => page.output
+            :name    => document.data['title'],
+            :path    => document.url,
+            :content => document.output
           }
         })
       end

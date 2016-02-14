@@ -1,8 +1,9 @@
 require 'spec_helper'
 
 RSpec.describe Drumknott::Refresh do
-  let(:site) { double 'Site', :process => true, :posts => [post, post] }
-  let(:post) { double 'Post', :title => 'A post', :url => '/',
+  let(:site)  { double 'Site', :process => true, :posts => posts }
+  let(:posts) { double 'Posts', :docs => [post, post] }
+  let(:post)  { double 'Post', :data => {'title' => 'A post'}, :url => '/',
     :output => 'post content' }
 
   before :each do
