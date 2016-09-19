@@ -17,6 +17,8 @@ The `keys` command will save your credentials to a `.drumknott` file in your sit
 
 By default, both posts and normal pages will be uploaded to Drumknott. If you only wish to include posts, the INCLUDE_PAGES argument in the `keys` command should be `'no'`. This can also be managed via the `DRUMKNOTT_PAGES` environment variable.
 
+You can have visual output of the refresh if you also include the `ruby-progressbar` gem in your Gemfile (or, if you're not using a Gemfile, just have that gem installed). However, if you prefer quiet even though the gem's installed, set the `DRUMKNOTT_SILENT` environment variable to be `'true'`.
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `bin/console` for an interactive prompt that will allow you to experiment.

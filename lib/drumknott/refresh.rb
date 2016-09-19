@@ -38,13 +38,26 @@ class Drumknott::Refresh
     @include_pages
   end
 
+  def output
+    @output ||= output_class.new { |document| update_document document }
+  end
+
+  def output_class
+    return Drumknott::Outputs::Silent if ENV['DRUMKNOTT_SILENT']
+
+    require 'ruby-progressbar'
+    Drumknott::Outputs::ProgressBar
+  rescue LoadError
+    Drumknott::Outputs::Silent
+  end
+
   def site
     @site ||= Jekyll::Site.new Jekyll.configuration
   end
 
   def update
-    site.posts.docs.each { |document| update_document document }
-    site.pages.each      { |page|     update_document page } if include_pages?
+    output.call "Posts", site.posts.docs
+    output.call "Pages", site.pages if include_pages?
   end
 
   def update_document(document)
