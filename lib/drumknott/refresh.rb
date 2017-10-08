@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Drumknott::Refresh
-  URL = "https://drumknottsearch.com"
+  URL = "https://drumknottsearch.com".freeze
 
   def self.call(name, key, include_pages = true)
     new(name, key, include_pages).call

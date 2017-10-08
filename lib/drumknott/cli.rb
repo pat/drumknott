@@ -2,21 +2,21 @@
 
 class Drumknott::CLI
   EMPTY_CACHE  = {}.freeze
-  HELP_MESSAGE = <<~MESSAGE
-    Commands are:
-      refresh: Update your site's content on Drumknott.
-      keys:    Create local file with your Drumknott credentials.
-      help:    Display this message.
+  HELP_MESSAGE = <<-MESSAGE.freeze
+Commands are:
+  refresh: Update your site's content on Drumknott.
+  keys:    Create local file with your Drumknott credentials.
+  help:    Display this message.
 
-    Example Usage:
-      $ drumknott refresh
-      $ drumknott keys my-site-name my-site-key
+Example Usage:
+  $ drumknott refresh
+  $ drumknott keys my-site-name my-site-key
 
-    Credentials for Drumknott are expected via environment variables, or
-    via a .drumknott file created using the `keys` command.
+Credentials for Drumknott are expected via environment variables, or
+via a .drumknott file created using the `keys` command.
 
-      DRUMKNOTT_NAME: Your site name, as registered with Drumknott.
-      DRUMKNOTT_KEY:  Your API key, as provided by Drumknott.
+  DRUMKNOTT_NAME: Your site name, as registered with Drumknott.
+  DRUMKNOTT_KEY:  Your API key, as provided by Drumknott.
   MESSAGE
 
   def self.call(

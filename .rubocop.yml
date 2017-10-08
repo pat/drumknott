@@ -1,6 +1,12 @@
 inherit_from:
   - https://gist.githubusercontent.com/pat/ba3b8ffb1901bfe5439b460943b6b019/raw/.rubocop.yml
 
+AllCops:
+  TargetRubyVersion: 2.2
+
+Layout/IndentHeredoc:
+  Enabled: false
+
 Style/ClassAndModuleChildren:
   Enabled: false
 
