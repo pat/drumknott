@@ -1,12 +1,16 @@
+# frozen_string_literal: true
+
 class Drumknott::Refresh
-  URL = 'https://drumknottsearch.com'
+  URL = "https://drumknottsearch.com"
 
   def self.call(name, key, include_pages = true)
     new(name, key, include_pages).call
   end
 
   def initialize(name, key, include_pages)
-    @name, @key, @include_pages = name, key, include_pages
+    @name          = name
+    @key           = key
+    @include_pages = include_pages
   end
 
   def call
@@ -23,7 +27,7 @@ class Drumknott::Refresh
   def clear
     connection.post do |request|
       request.url "/api/v1/#{name}/pages/clear"
-      request.headers['AUTHENTICATION'] = key
+      request.headers["AUTHENTICATION"] = key
     end
   end
 
@@ -43,12 +47,22 @@ class Drumknott::Refresh
   end
 
   def output_class
-    return Drumknott::Outputs::Silent if ENV['DRUMKNOTT_SILENT']
+    return Drumknott::Outputs::Silent if ENV["DRUMKNOTT_SILENT"]
 
-    require 'ruby-progressbar'
+    require "ruby-progressbar"
     Drumknott::Outputs::ProgressBar
   rescue LoadError
     Drumknott::Outputs::Silent
+  end
+
+  def page_json_for(document)
+    JSON.generate(
+      :page => {
+        :name    => document.data["title"],
+        :path    => document.url,
+        :content => document.output
+      }
+    )
   end
 
   def site
@@ -64,16 +78,10 @@ class Drumknott::Refresh
     connection.put do |request|
       request.url "/api/v1/#{name}/pages"
 
-      request.headers['AUTHENTICATION'] = key
-      request.headers['Content-Type']   = 'application/json'
+      request.headers["AUTHENTICATION"] = key
+      request.headers["Content-Type"]   = "application/json"
 
-      request.body = JSON.generate({
-        :page => {
-          :name    => document.data['title'],
-          :path    => document.url,
-          :content => document.output
-        }
-      })
+      request.body = page_json_for document
     end
   end
 end

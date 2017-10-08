@@ -1,17 +1,19 @@
+# frozen_string_literal: true
+
 class Drumknott::Keys
   def self.call(arguments)
     new(arguments).call
   end
 
   def initialize(arguments)
-    @name, @key, @pages, ignored = *arguments
+    @name, @key, @pages, _ignored = *arguments
   end
 
   def call
-    File.write '.drumknott', JSON.generate(
-      'name'  => name,
-      'key'   => key,
-      'pages' => Drumknott::IncludePages.call(pages)
+    File.write ".drumknott", JSON.generate(
+      "name"  => name,
+      "key"   => key,
+      "pages" => Drumknott::IncludePages.call(pages)
     )
   end
 

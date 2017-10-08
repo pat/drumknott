@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Drumknott::Outputs::Silent
   def self.call(&block)
     new(&block).call
@@ -7,7 +9,7 @@ class Drumknott::Outputs::Silent
     @block = block
   end
 
-  def call(label, collection)
+  def call(_label, collection)
     collection.each { |item| block.call item }
   end
 

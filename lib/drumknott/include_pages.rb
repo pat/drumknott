@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class Drumknott::IncludePages
-  TRUE_OPTIONS = ['true', 'yes', 'y'].freeze
+  TRUE_OPTIONS = %w[ true yes y ].freeze
 
   def self.call(value)
     case value
