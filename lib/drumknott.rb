@@ -5,7 +5,6 @@ require "json"
 require "jekyll"
 
 module Drumknott
-  #
 end
 
 require "drumknott/cli"

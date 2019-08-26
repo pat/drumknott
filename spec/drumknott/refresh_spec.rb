@@ -57,11 +57,13 @@ RSpec.describe Drumknott::Refresh do
       a_request(
         :put, "https://drumknottsearch.com/api/v1/my-site/pages"
       ).with(
-        :body => {"page" => {
-          "name"    => "A post",
-          "path"    => "/",
-          "content" => "post content"
-        }}.to_json,
+        :body    => {
+          "page" => {
+            "name"    => "A post",
+            "path"    => "/",
+            "content" => "post content"
+          }
+        }.to_json,
         :headers => {"AUTHENTICATION" => "my-key"}
       )
     ).to have_been_made.twice
@@ -74,11 +76,13 @@ RSpec.describe Drumknott::Refresh do
       a_request(
         :put, "https://drumknottsearch.com/api/v1/my-site/pages"
       ).with(
-        :body => {"page" => {
-          "name"    => "A page",
-          "path"    => "/",
-          "content" => "page content"
-        }}.to_json,
+        :body    => {
+          "page" => {
+            "name"    => "A page",
+            "path"    => "/",
+            "content" => "page content"
+          }
+        }.to_json,
         :headers => {"AUTHENTICATION" => "my-key"}
       )
     ).to have_been_made.once
@@ -91,18 +95,20 @@ RSpec.describe Drumknott::Refresh do
       a_request(
         :put, "https://drumknottsearch.com/api/v1/my-site/pages"
       ).with(
-        :body => {"page" => {
-          "name"    => "A page",
-          "path"    => "/",
-          "content" => "page content"
-        }}.to_json,
+        :body    => {
+          "page" => {
+            "name"    => "A page",
+            "path"    => "/",
+            "content" => "page content"
+          }
+        }.to_json,
         :headers => {"AUTHENTICATION" => "my-key"}
       )
     ).to_not have_been_made
   end
 
   it "uses cached credentials" do
-    Drumknott::CLI.call "keys", ["my-site", "my-key"]
+    Drumknott::CLI.call "keys", %w[ my-site my-key ]
     Drumknott::CLI.call "refresh"
 
     expect(

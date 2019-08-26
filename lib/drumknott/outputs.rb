@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 module Drumknott::Outputs
-  #
 end
 
 require "drumknott/outputs/silent"

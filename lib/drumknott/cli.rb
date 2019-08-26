@@ -2,7 +2,7 @@
 
 class Drumknott::CLI
   EMPTY_CACHE  = {}.freeze
-  HELP_MESSAGE = <<-MESSAGE.freeze
+  HELP_MESSAGE = <<-MESSAGE
 Commands are:
   refresh: Update your site's content on Drumknott.
   keys:    Create local file with your Drumknott credentials.

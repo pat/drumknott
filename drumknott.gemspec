@@ -20,11 +20,11 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_runtime_dependency "faraday"
-  spec.add_runtime_dependency "json"
   spec.add_runtime_dependency "jekyll", ">= 3.0"
+  spec.add_runtime_dependency "json"
 
   spec.add_development_dependency "rake"
   spec.add_development_dependency "rspec"
-  spec.add_development_dependency "rubocop", "~> 0.50.0"
+  spec.add_development_dependency "rubocop", "~> 0.74.0"
   spec.add_development_dependency "webmock"
 end
