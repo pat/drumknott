@@ -71,7 +71,12 @@ class Drumknott::Refresh
 
   def update
     output.call "Posts", site.posts.docs
-    output.call "Pages", site.pages if include_pages?
+    return unless include_pages?
+
+    output.call(
+      "Pages",
+      site.pages.select { |page| page.html? || page.url.end_with?("/") }
+    )
   end
 
   def update_document(document)
