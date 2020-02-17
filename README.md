@@ -35,5 +35,4 @@ Firstly, please note the Code of Conduct for all contributions to this project. 
 
 ## Licence
 
-Copyright (c) 2016, Drumknott is developed and maintained by Pat Allan, and is
-released under the open MIT Licence.
+Copyright (c) 2016-2020, Drumknott is developed and maintained by Pat Allan, and is released under the open MIT Licence.
