@@ -4,7 +4,9 @@ require "spec_helper"
 
 RSpec.describe Drumknott::Refresh do
   let(:site) do
-    double "Site", :process => true, :posts => posts, :pages => [page]
+    double "Site", :process => true, :posts => posts, :pages => [
+      page, non_html_page
+    ]
   end
   let(:posts) { double "Posts", :docs => [post, post] }
   let(:post) do
@@ -16,7 +18,17 @@ RSpec.describe Drumknott::Refresh do
   let(:page) do
     double(
       "Page",
+      :html? => true,
       :data => {"title" => "A page"}, :url => "/", :output => "page content"
+    )
+  end
+  let(:non_html_page) do
+    double(
+      "Page",
+      :html? => false,
+      :data => {"title" => "CSS page"},
+      :url => "/css.css",
+      :output => "css content"
     )
   end
 
@@ -86,6 +98,39 @@ RSpec.describe Drumknott::Refresh do
         :headers => {"AUTHENTICATION" => "my-key"}
       )
     ).to have_been_made.once
+  end
+  it "updates each page but skips non html pages" do
+    Drumknott::CLI.call "refresh", [], "my-site", "my-key"
+
+    expect(
+      a_request(
+        :put, "https://drumknottsearch.com/api/v1/my-site/pages"
+      ).with(
+        :body    => {
+          "page" => {
+            "name"    => "A page",
+            "path"    => "/",
+            "content" => "page content"
+          }
+        }.to_json,
+        :headers => {"AUTHENTICATION" => "my-key"}
+      )
+    ).to have_been_made.once
+
+    expect(
+      a_request(
+        :put, "https://drumknottsearch.com/api/v1/my-site/pages"
+      ).with(
+        :body    => {
+          "page" => {
+            "name"    => "CSS page",
+            "path"    => "/css.css",
+            "content" => "css content"
+          }
+        }.to_json,
+        :headers => {"AUTHENTICATION" => "my-key"}
+      )
+    ).to_not have_been_made
   end
 
   it "skips pages if requested" do
