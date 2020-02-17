@@ -25,9 +25,9 @@ RSpec.describe Drumknott::Refresh do
   let(:non_html_page) do
     double(
       "Page",
-      :html? => false,
-      :data => {"title" => "CSS page"},
-      :url => "/css.css",
+      :html?  => false,
+      :data   => {"title" => "CSS page"},
+      :url    => "/css.css",
       :output => "css content"
     )
   end
