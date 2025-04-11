@@ -19,6 +19,7 @@ via a .drumknott file created using the `keys` command.
   DRUMKNOTT_KEY:  Your API key, as provided by Drumknott.
   MESSAGE
 
+  # rubocop:disable Metrics/ParameterLists
   def self.call(
     command, arguments = [], name = nil, key = nil, include_pages = nil
   )
@@ -34,6 +35,7 @@ via a .drumknott file created using the `keys` command.
     @key           = key
     @include_pages = include_pages
   end
+  # rubocop:enable Metrics/ParameterLists
 
   def call
     case command

@@ -3,9 +3,11 @@
 class Drumknott::Refresh
   URL = "https://drumknottsearch.com"
 
+  # rubocop:disable Style/OptionalBooleanParameter
   def self.call(name, key, include_pages = true)
     new(name, key, include_pages).call
   end
+  # rubocop:enable Style/OptionalBooleanParameter
 
   def initialize(name, key, include_pages)
     @name          = name

@@ -19,12 +19,14 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |file| File.basename(file) }
   spec.require_paths = ["lib"]
 
+  spec.required_ruby_version = ">= 3.1"
+
   spec.add_runtime_dependency "faraday"
   spec.add_runtime_dependency "jekyll", ">= 3.0"
   spec.add_runtime_dependency "json"
 
   spec.add_development_dependency "rake"
   spec.add_development_dependency "rspec"
-  spec.add_development_dependency "rubocop", "~> 0.79.0"
+  spec.add_development_dependency "rubocop"
   spec.add_development_dependency "webmock"
 end
