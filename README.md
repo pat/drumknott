@@ -1,5 +1,13 @@
 # Drumknott CLI
 
+**April 13th 2025**
+
+Sorry folks, Drumknott is no more - it was a nice little service, but never earned enough to pay for its own hosting. That's not terrible, but after coming across [Pagefind](https://pagefind.app), I realised I could just encourage migration to that, and save both myself and customers a little bit of money.
+
+Stay safe out there, and look after each other! 🇵🇸🇱🇧🏳️‍⚧️🏳️‍🌈
+
+---
+
 Command line tool for the Drumknott search service. When invoked, it takes each of your compiled Jekyll pages and uploads them to Drumknott.
 
 ## Installation
